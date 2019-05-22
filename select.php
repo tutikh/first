@@ -19,4 +19,5 @@ if($result)
     }
     echo "</table>";
     mysqli_free_result($result);
+    echo "test";
 }
