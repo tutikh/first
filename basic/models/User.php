@@ -105,6 +105,10 @@ class User extends ActiveRecord implements IdentityInterface
         $this->auth_key = Yii::$app->security->generateRandomString();
     }
 
+    public function getPosts() {
+        return $this -> hasMany(Post::className(), ['user_id' => 'id']);
+    }
+
     public function fields()
     {
         $fields = parent::fields();

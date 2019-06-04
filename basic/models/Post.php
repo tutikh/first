@@ -3,6 +3,9 @@
 namespace app\models;
 
 use Yii;
+use yii\web\Linkable;
+use yii\web\Link;
+use yii\helpers\Url;
 
 /**
  * This is the model class for table "post".
@@ -15,7 +18,7 @@ use Yii;
  * @property int $user_id
  * @property string $publish_date
  */
-class Post extends \yii\db\ActiveRecord
+class Post extends \yii\db\ActiveRecord implements Linkable
 {
     /**
      * {@inheritdoc}
@@ -57,6 +60,7 @@ class Post extends \yii\db\ActiveRecord
 
     public function getUser() {
         return $this -> hasOne(User::className(), ['id' => 'user_id']);
+
     }
 
     public function getCategory() {
@@ -65,14 +69,33 @@ class Post extends \yii\db\ActiveRecord
 
     public function fields()
     {
-        $fields = parent::fields();
-        return $fields;
+        return [
+            'id',
+            'title',
+            'anons',
+            'content',
+            'category' => function($item) {
+            return $item ->category -> title ?? null;
+            },
+            'username' => function($item) {
+                return $item ->user -> username;
+            },
+            'publish_date',
+        ];
     }
 
     public function extraFields()
     {
         return [
-            'user'
+            'user',
+            'category'
         ];
     }
+    public function getLinks()
+    {
+        return [
+            Link::REL_SELF => Url::to(['post/view', 'id' => $this->id], true),
+        ];
+    }
+
 }

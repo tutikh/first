@@ -53,17 +53,30 @@ $config = [
             'rules' => [
                 [
                     'class' => 'yii\rest\UrlRule',
-                    'controller' => 'app\controllers\api\user',
-                    'pluralize' => true
+                    'controller' => 'api/user',
+                    'pluralize' => false,
+                    'tokens' => [
+                        '{id}' => '<id:\\d+>'
+                    ]
                 ],
                 [
                     'class' => 'yii\rest\UrlRule',
-                    'controller' => 'app\controllers\api\post',
-                    'pluralize' => true
+                    'controller' => 'api/post',
+                    'pluralize' => false,
+                    'tokens' => [
+                        '{id}' => '<id:\\d+>'
+                    ]
+                ],
+                [
+                    'class' => 'yii\rest\UrlRule',
+                    'controller' => 'api/category',
+                    'pluralize' => false,
+                    'tokens' => [
+                        '{id}' => '<id:\\d+>'
+                    ]
                 ],
             ],
         ],
-
     ],
     'params' => $params,
 ];
